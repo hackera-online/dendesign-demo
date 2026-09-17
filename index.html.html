@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEN Design × Hackera — Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,440&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --paper-2:#F3F2EE;
+    --ink:#131210;
+    --ink-soft:#6D6A64;
+    --line:#E2DFD7;
+    --accent:#131210;
+    --accent-soft:#8A7F6E;
+    --accent-contrast:#FFFFFF;
+    --success:#4B6D53;
+    --success-bg:#E7EEE3;
+    --warm:#8A4226;
+    --shadow: 0 1px 0 rgba(19,18,16,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141210;
+      --paper-2:#1D1A17;
+      --ink:#F2EFE9;
+      --ink-soft:#A69E8F;
+      --line:#332E27;
+      --accent:#F2EFE9;
+      --accent-soft:#A69E8F;
+      --accent-contrast:#141210;
+      --success:#8FB89A;
+      --success-bg:#233026;
+      --warm:#D08A5E;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141210;
+    --paper-2:#1D1A17;
+    --ink:#F2EFE9;
+    --ink-soft:#A69E8F;
+    --line:#332E27;
+    --accent:#F2EFE9;
+    --accent-soft:#A69E8F;
+    --accent-contrast:#141210;
+    --success:#8FB89A;
+    --success-bg:#233026;
+    --warm:#D08A5E;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', -apple-system, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3{font-family:'Work Sans', sans-serif; font-weight:700; margin:0; letter-spacing:-0.01em;}
+  a{color:inherit;}
+
+  /* ---- nav ---- */
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 24px; border-bottom:1px solid var(--line);
+  }
+  .wordmark{font-size:15px; letter-spacing:0.22em; font-weight:600; text-transform:uppercase;}
+  .wordmark b{font-weight:600;}
+  .badge{
+    font-size:11.5px; color:var(--ink-soft); border:1px solid var(--line);
+    padding:5px 11px; border-radius:99px; white-space:nowrap; letter-spacing:0.02em;
+  }
+
+  /* ---- hero ---- */
+  .hero{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px;
+    align-items:center; padding:64px 24px 56px; max-width:1040px; margin:0 auto;
+  }
+  .hero h1{font-size:clamp(32px,4.4vw,46px); line-height:1.14;}
+  .hero p{color:var(--ink-soft); font-size:17px; max-width:46ch; margin-top:18px;}
+  .hero-note{
+    margin-top:26px; font-size:13px; color:var(--ink-soft);
+    display:flex; gap:8px; align-items:baseline;
+  }
+  .hero-note::before{content:"—"; color:var(--accent);}
+  .blueprint{width:100%; height:auto;}
+
+  @media (max-width: 760px){
+    .hero{grid-template-columns:1fr; padding-top:44px;}
+    .blueprint{max-width:320px; margin:0 auto;}
+  }
+
+  /* ---- section shell ---- */
+  section{padding:64px 24px; border-top:1px solid var(--line);}
+  .section-inner{max-width:920px; margin:0 auto;}
+  .eyebrow-line{
+    display:flex; align-items:center; gap:14px; margin-bottom:26px; color:var(--ink-soft); font-size:14px;
+  }
+  .eyebrow-line .num{
+    font-family:'Fraunces', serif; color:var(--warm); font-size:15px;
+  }
+  .signature{
+    font-family:'Fraunces', Georgia, serif; font-style:italic; color:var(--ink-soft);
+    font-size:15px; margin-bottom:14px;
+  }
+  .num-block{display:flex; gap:16px;}
+  .num-block .idx{font-family:'Fraunces', serif; font-size:15px; color:var(--warm); flex:none; padding-top:2px;}
+  .num-block h3{font-size:16px; font-weight:600; margin-bottom:6px;}
+  .num-block p{font-size:14px; color:var(--ink-soft); margin:0; line-height:1.55;}
+  .num-blocks{display:flex; flex-direction:column; gap:26px;}
+  .eyebrow-line .rule{flex:1; height:1px; background:var(--line);}
+
+  /* ---- observed ---- */
+  .observed-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:44px;}
+  .observed-grid blockquote{
+    margin:0; font-family:'Fraunces', serif; font-size:22px; line-height:1.45; font-weight:400;
+  }
+  .observed-grid blockquote span{color:var(--accent);}
+  .tags{display:flex; flex-wrap:wrap; gap:10px; align-content:flex-start;}
+  .tag{
+    border:1px solid var(--line); padding:9px 14px; border-radius:8px; font-size:14px; color:var(--ink-soft);
+  }
+  @media (max-width:700px){ .observed-grid{grid-template-columns:1fr;} }
+
+  /* ---- chat demo ---- */
+  .chat-frame{
+    border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--paper-2);
+    max-width:560px; margin:0 auto;
+  }
+  .chat-topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 18px; border-bottom:1px solid var(--line);
+  }
+  .chat-topbar .who{display:flex; align-items:center; gap:10px; font-size:14px;}
+  .dot{width:8px; height:8px; border-radius:50%; background:var(--success); flex:none;}
+  .chat-body{
+    min-height:300px; padding:20px 18px; display:flex; flex-direction:column; gap:12px;
+  }
+  .bubble{
+    max-width:80%; padding:10px 14px; border-radius:12px; font-size:14.5px; line-height:1.5;
+    opacity:0; transform:translateY(6px); animation:rise 0.35s ease forwards;
+  }
+  @keyframes rise{ to{opacity:1; transform:translateY(0);} }
+  .bubble.visitor{
+    align-self:flex-end; background:var(--accent); color:var(--accent-contrast); border-bottom-right-radius:4px;
+  }
+  .bubble.ai{
+    align-self:flex-start; background:var(--paper); border:1px solid var(--line); border-bottom-left-radius:4px;
+  }
+  .typing{
+    align-self:flex-start; display:flex; gap:4px; padding:12px 14px;
+    background:var(--paper); border:1px solid var(--line); border-radius:12px; border-bottom-left-radius:4px;
+    opacity:0; animation:rise 0.25s ease forwards;
+  }
+  .typing i{width:6px; height:6px; border-radius:50%; background:var(--ink-soft); display:inline-block; animation:blink 1.1s infinite;}
+  .typing i:nth-child(2){animation-delay:0.15s;} .typing i:nth-child(3){animation-delay:0.3s;}
+  @keyframes blink{ 0%,80%,100%{opacity:0.25;} 40%{opacity:1;} }
+  .chat-footer{padding:16px 18px; border-top:1px solid var(--line); text-align:center;}
+  .play-btn{
+    background:var(--accent); color:var(--accent-contrast); border:none; padding:11px 22px;
+    font-family:'Work Sans', sans-serif; font-size:14px; font-weight:500; border-radius:8px; cursor:pointer;
+  }
+  .play-btn:disabled{opacity:0.45; cursor:default;}
+  .replay-btn{
+    background:none; border:1px solid var(--line); color:var(--ink-soft); padding:9px 16px;
+    font-size:13px; border-radius:8px; cursor:pointer; display:none;
+  }
+
+  /* ---- lead card ---- */
+  .lead-wrap{max-width:420px; margin:26px auto 0; opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease;}
+  .lead-wrap.shown{opacity:1; transform:translateY(0);}
+  .lead-card{
+    border:1px solid var(--line); border-radius:12px; background:var(--paper-2); overflow:hidden;
+  }
+  .lead-head{
+    padding:12px 16px; border-bottom:1px solid var(--line); font-size:12.5px; letter-spacing:0.02em;
+    color:var(--ink-soft); display:flex; justify-content:space-between;
+  }
+  .lead-rows{padding:16px;}
+  .lead-row{display:flex; justify-content:space-between; padding:7px 0; font-size:14px; border-bottom:1px dashed var(--line);}
+  .lead-row:last-of-type{border-bottom:none;}
+  .lead-row span:first-child{color:var(--ink-soft);}
+  .lead-score{
+    margin-top:12px; display:flex; align-items:center; justify-content:space-between;
+    background:var(--success-bg); color:var(--success); padding:9px 12px; border-radius:8px; font-size:13.5px; font-weight:500;
+  }
+  .lead-actions{display:flex; gap:8px; padding:0 16px 16px;}
+  .lead-actions div{
+    flex:1; text-align:center; font-size:12.5px; border:1px solid var(--line); border-radius:7px; padding:9px 6px; color:var(--ink-soft);
+  }
+
+  /* ---- flow diagram ---- */
+  .flow{max-width:560px; margin:0 auto;}
+  .flow-row{display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:6px;}
+  .flow-box{
+    border:1px solid var(--line); border-radius:9px; padding:12px 16px; font-size:13.5px; text-align:center;
+    background:var(--paper-2); flex:1;
+  }
+  .flow-box.main{border-color:var(--accent); color:var(--accent); font-weight:500; background:transparent;}
+  .flow-arrow{display:flex; justify-content:center; color:var(--ink-soft); font-size:15px; margin:2px 0;}
+  .flow-queries{
+    display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:14px;
+  }
+  .flow-queries span{
+    font-size:12.5px; color:var(--ink-soft); border:1px solid var(--line); border-radius:99px; padding:5px 12px;
+  }
+
+  /* ---- footer ---- */
+  footer{padding:60px 24px 70px; text-align:center;}
+  footer .cta-line{font-family:'Fraunces', serif; font-size:22px; margin-bottom:10px;}
+  footer .cta-line b{color:var(--accent); font-weight:600;}
+  footer p{color:var(--ink-soft); font-size:13.5px; max-width:44ch; margin:0 auto;}
+  footer .disclaimer{margin-top:26px; font-size:12px; color:var(--ink-soft); opacity:0.75;}
+
+  @media (prefers-reduced-motion: reduce){
+    .bubble, .typing, .lead-wrap{animation:none !important; transition:none !important; opacity:1 !important; transform:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wordmark">DEN <b>Design</b></div>
+  <div class="badge">DEMO — концепция от Hackera</div>
+</nav>
+
+<div class="hero">
+  <div>
+    <h1>Всеки посетител на dendesign.bg получава личен архитектурен консултант</h1>
+    <p>Малка демонстрация как AI асистент може да поема разговора с всеки посетител, да го квалифицира и да го насочи направо към безплатната Ви консултация.</p>
+    <div class="hero-note">2-минутна демонстрация, изградена специално за DEN Design</div>
+  </div>
+  <svg class="blueprint" viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+    <rect x="20" y="70" width="220" height="150" fill="none" stroke="var(--accent-soft)" stroke-width="1.3"/>
+    <line x1="130" y1="70" x2="130" y2="220" stroke="var(--accent-soft)" stroke-width="1"/>
+    <line x1="20" y1="150" x2="240" y2="150" stroke="var(--accent-soft)" stroke-width="1"/>
+    <path d="M10 70 L130 15 L250 70" fill="none" stroke="var(--ink)" stroke-width="1.6"/>
+    <rect x="55" y="170" width="30" height="50" fill="none" stroke="var(--ink)" stroke-width="1.3"/>
+    <circle cx="150" cy="190" r="16" fill="none" stroke="var(--ink)" stroke-width="1.3"/>
+    <line x1="150" y1="174" x2="150" y2="206" stroke="var(--ink)" stroke-width="1"/>
+    <line x1="134" y1="190" x2="166" y2="190" stroke="var(--ink)" stroke-width="1"/>
+    <text x="20" y="240" font-family="Work Sans" font-size="9" fill="var(--ink-soft)" letter-spacing="1">М 1:100 — ЖИЛИЩНА СГРАДА</text>
+  </svg>
+</div>
+
+<section>
+  <div class="section-inner">
+    <div class="eyebrow-line"><span class="num">Открихме</span><div class="rule"></div></div>
+    <div class="observed-grid">
+      <blockquote>Разгледахме DEN Design и видяхме студио с <span>ясен фокус</span> — жилищна архитектура, интериор и цялостни проекти, с реално портфолио зад думите.</blockquote>
+      <div class="tags">
+        <div class="tag">Еднофамилни къщи</div>
+        <div class="tag">Интериорен дизайн</div>
+        <div class="tag">Многофамилни сгради</div>
+        <div class="tag">Преустройства</div>
+        <div class="tag">Безплатна 20-мин консултация</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="eyebrow-line"><span class="num">AI асистент</span><div class="rule"></div></div>
+    <div class="chat-frame">
+      <div class="chat-topbar">
+        <div class="who"><span class="dot"></span>DEN Design — асистент</div>
+        <div style="font-size:12px; color:var(--ink-soft);">на dendesign.bg</div>
+      </div>
+      <div class="chat-body" id="chatBody"></div>
+      <div class="chat-footer">
+        <button class="play-btn" id="playBtn" onclick="startDemo()">Пусни демото</button>
+        <button class="replay-btn" id="replayBtn" onclick="startDemo()">Пусни отново</button>
+      </div>
+    </div>
+    <div class="lead-wrap" id="leadWrap">
+      <div class="lead-card">
+        <div class="lead-head"><span>НОВО ЗАПИТВАНЕ</span><span>сега</span></div>
+        <div class="lead-rows">
+          <div class="lead-row"><span>Услуга</span><span>Еднофамилна къща</span></div>
+          <div class="lead-row"><span>Локация</span><span>София</span></div>
+          <div class="lead-row"><span>Площ</span><span>~220 m²</span></div>
+          <div class="lead-row"><span>Парцел</span><span>Да</span></div>
+          <div class="lead-row"><span>Срок</span><span>3–6 месеца</span></div>
+          <div class="lead-score"><span>Lead Score</span><span>ВИСОК</span></div>
+        </div>
+        <div class="lead-actions">
+          <div>→ Изпрати<br>към DEN Design</div>
+          <div>→ Запази<br>консултация</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="eyebrow-line"><span class="num">Как стигат дотук</span><div class="rule"></div></div>
+    <div class="flow">
+      <div class="flow-queries">
+        <span>„архитект София“</span><span>„архитектурно бюро София“</span>
+        <span>„интериорен дизайнер София“</span><span>„проект къща София“</span>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-row"><div class="flow-box main">DEN DESIGN — сайт</div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-row"><div class="flow-box">AI асистент посреща посетителя</div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-row"><div class="flow-box">Квалифицирано запитване</div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-row"><div class="flow-box main">Запазена консултация</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="cta-line">Hackera → Website · SEO · <b>AI асистент</b> · Lead Generation</div>
+  <p>Идеята не е посетителят просто да разгледа сайта и да си тръгне — а да получи отговор веднага и да остави заявка, докато интересът му е най-силен.</p>
+  <div class="disclaimer">Демонстрационна страница, изготвена от Hackera за DEN Design. Не е свързана с реалния сайт dendesign.bg.</div>
+</footer>
+
+<script>
+  const script = [
+    {who:'visitor', text:'Здравейте, интересувам се от проект за еднофамилна къща.'},
+    {who:'ai', text:'Здравейте! С удоволствие ще Ви помогна. За да Ви насоча към подходящ архитект от екипа, бих искал да задам няколко кратки въпроса.'},
+    {who:'ai', text:'📍 В кой град се намира имотът?'},
+    {who:'visitor', text:'София.'},
+    {who:'ai', text:'🏠 Имате ли вече готов парцел?'},
+    {who:'visitor', text:'Да, около 500 кв.м.'},
+    {who:'ai', text:'📐 Приблизителна квадратура на къщата?'},
+    {who:'visitor', text:'Около 220 кв.м.'},
+    {who:'ai', text:'📅 Кога бихте искали да започнете проекта?'},
+    {who:'visitor', text:'В рамките на следващите 3 до 6 месеца.'},
+    {who:'ai', text:'Благодаря! Мога да Ви предложа безплатна 20-минутна консултация с екипа на DEN Design — изпращам данните към тях сега.'},
+  ];
+
+  let running = false;
+
+  function startDemo(){
+    if(running) return;
+    running = true;
+    const body = document.getElementById('chatBody');
+    const playBtn = document.getElementById('playBtn');
+    const replayBtn = document.getElementById('replayBtn');
+    const leadWrap = document.getElementById('leadWrap');
+    body.innerHTML = '';
+    leadWrap.classList.remove('shown');
+    playBtn.disabled = true;
+    playBtn.style.display = 'none';
+    replayBtn.style.display = 'none';
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0;
+
+    function step(){
+      if(i >= script.length){
+        running = false;
+        replayBtn.style.display = 'inline-block';
+        setTimeout(()=> leadWrap.classList.add('shown'), 250);
+        return;
+      }
+      const msg = script[i];
+      if(reduced){
+        addBubble(msg);
+        i++;
+        step();
+        return;
+      }
+      const typingEl = document.createElement('div');
+      typingEl.className = 'typing';
+      typingEl.innerHTML = '<i></i><i></i><i></i>';
+      body.appendChild(typingEl);
+      body.scrollTop = body.scrollHeight;
+      setTimeout(()=>{
+        typingEl.remove();
+        addBubble(msg);
+        i++;
+        setTimeout(step, msg.who === 'ai' ? 550 : 400);
+      }, msg.who === 'ai' ? 700 : 450);
+    }
+
+    function addBubble(msg){
+      const el = document.createElement('div');
+      el.className = 'bubble ' + msg.who;
+      el.textContent = msg.text;
+      body.appendChild(el);
+      body.scrollTop = body.scrollHeight;
+    }
+
+    step();
+  }
+</script>
+</body>
+</html>
